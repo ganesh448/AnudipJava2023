@@ -1,0 +1,44 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Set;
+
+public class DuplicateNumberCheck {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        try {
+            System.out.print("Enter a list of integers separated by spaces: ");
+            String input = scanner.nextLine();
+            String[] inputArray = input.split(" ");
+            
+            List<Integer> numbers = new ArrayList<>();
+            Set<Integer> uniqueNumbers = new HashSet<>();
+            
+            for (String numStr : inputArray) {
+                int num = Integer.parseInt(numStr);
+                if (uniqueNumbers.contains(num)) {
+                    throw new DuplicateNumberException("Duplicate number found: " + num);
+                }
+                numbers.add(num);
+                uniqueNumbers.add(num);
+            }
+            
+            System.out.println("No duplicates found. Entered numbers: " + numbers);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter integers separated by spaces.");
+        } catch (DuplicateNumberException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            scanner.close();
+        }
+    }
+}
+
+class DuplicateNumberException extends Exception {
+    public DuplicateNumberException(String message) {
+        super(message);
+    }
+}
